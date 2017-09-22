@@ -17,15 +17,22 @@ import products.SeasonPass;
 
 public class FlatFileReader {
 
-	Scanner personScanner = null;
-	Scanner productScanner = null;
-	Scanner customerScanner = null;
+//	Should put these within there respective methods, or made private
 
-	String personFile = "data/Persons.dat";
-	String productFile = "data/Products.dat";
-	String customerFile = "data/Customers.dat";
+//	Scanner personScanner = null;
+//	Scanner productScanner = null;
+//	Scanner customerScanner = null;
+//
+//
+//	String personFile = "data/Persons.dat";
+//	String productFile = "data/Products.dat";
+//	String customerFile = "data/Customers.dat";
 
 	public ArrayList<Person> readPersons() {
+
+//		I moved the personScanner, and personFile to inside the method
+		Scanner personScanner = null;
+		String personFile = "data/Persons.dat";
 
 		try {
 
@@ -91,6 +98,9 @@ public class FlatFileReader {
 
 	public ArrayList<Customer> readCustomers(ArrayList<Person> personsList) {
 
+//		Moved the customerScanner, and customer file to the method
+		Scanner customerScanner = null;
+		String customerFile = "data/Customers.dat";
 		try {
 
 			customerScanner = new Scanner(new File(customerFile));
@@ -142,6 +152,8 @@ public class FlatFileReader {
 
 	public ArrayList<Product> readProducts() {
 
+		Scanner productScanner = null;
+		String productFile = "data/Products.dat";
 		try {
 
 			productScanner = new Scanner(new File(productFile));
