@@ -1,0 +1,159 @@
+{
+  "customerCode": "C001",
+  "Contact": {
+    "personCode": "231",
+    "firstName": "Tom",
+    "lastName": "Baker",
+    "address": {
+      "street": "1 Blue Jays Way",
+      "city": " Toronto",
+      "state": " ON",
+      "zip": " M5V 1J1",
+      "country": " Canada"
+    },
+    "email": [
+      "famousdoc@who.com",
+      "tbaker@cse.unl.edu",
+      "mostfamous@whovian.com",
+      "thedoctor@bbc.com"
+    ]
+  },
+  "customerName": "Clark Consultants",
+  "address": {
+    "street": "259 Concorde Suites",
+    "city": "Lincoln",
+    "state": "NE",
+    "zip": "68588-0115",
+    "country": "USA"
+  }
+}
+{
+  "customerCode": "C002",
+  "Contact": {
+    "personCode": "944c",
+    "firstName": " Starlin",
+    "lastName": "Castro",
+    "address": {
+      "street": "1060 West Addison Street",
+      "city": "Chicago",
+      "state": "IL",
+      "zip": "60613",
+      "country": "USA"
+    },
+    "email": [
+      "scastro@cubs.com",
+      "starlin_castro13@gmail.com"
+    ]
+  },
+  "customerName": "CAS International Fellows",
+  "address": {
+    "street": "1223 Oldfather Hall",
+    "city": "Lincoln",
+    "state": "NE",
+    "zip": "68503",
+    "country": "USA"
+  }
+}
+{
+  "customerCode": "C003",
+  "Contact": {
+    "personCode": "306a",
+    "firstName": " Brock",
+    "lastName": "Sampson",
+    "address": {
+      "street": "123 N 1st Street",
+      "city": "Omaha",
+      "state": "NE",
+      "zip": "68116",
+      "country": "USA"
+    },
+    "email": [
+      "brock_f_sampson@gmail.com",
+      "bsampson@venture.com"
+    ]
+  },
+  "customerName": "Valueless Club",
+  "address": {
+    "street": "123 Venture Way",
+    "city": "Culver City",
+    "state": "CA",
+    "zip": "90230",
+    "country": "USA"
+  }
+}
+{
+  "customerCode": "C004",
+  "Contact": {
+    "personCode": "321f",
+    "firstName": " Bud",
+    "lastName": "Fox",
+    "address": {
+      "street": "321 Bronx Street",
+      "city": "New York",
+      "state": "NY",
+      "zip": "10004",
+      "country": "USA"
+    },
+    "email": [
+      "bfox@gmail.com",
+      "csheen@crazy.net"
+    ]
+  },
+  "customerName": "Stony Brook",
+  "address": {
+    "street": "9800 Savage Rd",
+    "city": "Fort Meade",
+    "state": "MD",
+    "zip": "20755",
+    "country": "USA"
+  }
+}
+{
+  "customerCode": "C005",
+  "Contact": {
+    "personCode": "bbchar",
+    "firstName": " Kaylee",
+    "lastName": "Ehrmantraut",
+    "address": {
+      "street": "800 West 7th Street",
+      "city": " Albuquerque",
+      "state": " NM",
+      "zip": " 87105",
+      "country": "USA"
+    }
+  },
+  "customerName": "Hewlett Industries",
+  "address": {
+    "street": "1060 West Addison",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": "60601",
+    "country": "USA"
+  }
+}
+{
+  "customerCode": "C006",
+  "Contact": {
+    "personCode": "321dr",
+    "firstName": " C.",
+    "lastName": "Baker",
+    "address": {
+      "street": "Avery Hall",
+      "city": "Lincoln",
+      "state": "NE",
+      "zip": "68503",
+      "country": "USA"
+    },
+    "email": [
+      "dr@baker.com"
+    ]
+  },
+  "customerName": "Gregory Smith",
+  "address": {
+    "street": "456 West 7th St.",
+    "city": "Omaha",
+    "state": "NE",
+    "zip": "68500",
+    "country": "USA"
+  }
+}
