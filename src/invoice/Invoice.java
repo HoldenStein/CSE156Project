@@ -6,16 +6,17 @@ import products.Product;
 
 import java.util.ArrayList;
 
-public abstract class Invoice {
-    protected String invoiceCode;
-    protected String customerCode;
-    protected String salespersonCode;
-    protected String invoiceDate;
-    protected ArrayList<Product> productList;
-    protected ArrayList<Customer> customerList;
-    protected ArrayList<Person> personList;
+public class Invoice {
+    private String invoiceCode;
+    private String customerCode;
+    private String salespersonCode;
+    private String invoiceDate;
+    private ArrayList<Product> productList;
+    private ArrayList<Customer> customerList;
+    private ArrayList<Person> personList;
+    private ArrayList<Invoice> invoiceList;
 
-    public Invoice(String invoiceCode, String customerCode, String salespersonCode, String invoiceDate, ArrayList<Product> productList, ArrayList<Customer> customerList, ArrayList<Person> personList) {
+    public Invoice(String invoiceCode, String customerCode, String salespersonCode, String invoiceDate, ArrayList<Customer> customerList, ArrayList<Person> personList) {
         this.invoiceCode = invoiceCode;
         this.customerCode = customerCode;
         this.salespersonCode = salespersonCode;
@@ -23,6 +24,39 @@ public abstract class Invoice {
         this.productList = productList;
         this.customerList = customerList;
         this.personList = personList;
+    }
+
+    public Invoice(ArrayList<Invoice> invoiceList) {
+        this.invoiceList = invoiceList;
+    }
+
+
+
+    public String getCustomerName() {
+        for(Customer c : this.customerList) {
+            if(c.getCustomerCode().equals(this.customerCode)) {
+                return c.getName();
+
+            }
+        }
+        return "This is not a customer";
+    }
+
+    public String getSalesPersonName() {
+        for(Person p: this.personList) {
+            if(p.getPersonCode().equals(this.salespersonCode)) {
+                return p.getLastName() + ", "  + p.getFirstName();
+            }
+        }
+
+        return "This is not a person ";
+    }
+
+    public void getSummaryReport() {
+        System.out.println("INVOICE NUMBER - CUSTOMER NAME - SALESPERSON");
+        for(Invoice i : this.invoiceList) {
+            System.out.println(i.getInvoiceCode() + " - " + i.getCustomerName() + " - " + i.getSalesPersonName());
+        }
     }
 
     public String getInvoiceCode() {

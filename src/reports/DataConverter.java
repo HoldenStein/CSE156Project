@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import dataContainer.Customer;
 import dataContainer.Person;
 import fileReader.FlatFileReader;
-import fileWriter.JsonWriter;
-import fileWriter.XMLWriter;
+
+import invoice.Invoice;
 import products.Product;
 
 public class DataConverter {
@@ -26,27 +26,32 @@ public class DataConverter {
 		ArrayList<Person> personList = fr.readPersons();
 		ArrayList<Customer> customerList = fr.readCustomers(personList);
 		ArrayList<Product> productList = fr.readProducts();
+		ArrayList<Invoice> invoiceList = fr.readInvoice(personList, customerList, productList);
 
-		XMLWriter xmlWriter = new XMLWriter();
-		JsonWriter jWriter = new JsonWriter();
+		Invoice invoice = new Invoice(invoiceList);
 
-		// Write Person ArrayList into a Json file
-		jWriter.jsonConverter(personList, personJsonOut);
+		invoice.getSummaryReport();
 
-		// Write Person ArrayList into an XML file
-		xmlWriter.xmlConverter(personList, personXmlOut, "Person");
-
-		// Write Customer ArrayList into a Json file
-		jWriter.jsonConverter(customerList, customerJsonOut);
-
-		// Write Customer ArrayList into an XML file
-		xmlWriter.xmlConverter(customerList, customerXmlOut, "Customer");
-
-		// Write Product ArrayList into a Json file
-		jWriter.jsonConverter(productList, productJsonOut);
-
-		// Write Product ArrayList into an XML file
-		xmlWriter.xmlConverter(productList, productXmlOut, "Product");
+//		XMLWriter xmlWriter = new XMLWriter();
+//		JsonWriter jWriter = new JsonWriter();
+//
+//		// Write Person ArrayList into a Json file
+//		jWriter.jsonConverter(personList, personJsonOut);
+//
+//		// Write Person ArrayList into an XML file
+//		xmlWriter.xmlConverter(personList, personXmlOut, "Person");
+//
+//		// Write Customer ArrayList into a Json file
+//		jWriter.jsonConverter(customerList, customerJsonOut);
+//
+//		// Write Customer ArrayList into an XML file
+//		xmlWriter.xmlConverter(customerList, customerXmlOut, "Customer");
+//
+//		// Write Product ArrayList into a Json file
+//		jWriter.jsonConverter(productList, productJsonOut);
+//
+//		// Write Product ArrayList into an XML file
+//		xmlWriter.xmlConverter(productList, productXmlOut, "Product");
 
 	}
 

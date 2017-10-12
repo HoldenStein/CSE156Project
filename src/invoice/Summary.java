@@ -17,8 +17,8 @@ public class Summary extends Invoice {
     private double total;
 
 
-    public Summary(String invoiceCode, String customerCode, String salespersonCode, String invoiceDate, ArrayList<Product> productList, ArrayList<Customer> customerList, ArrayList<Person> personList, String invoiceID, String customerName, String salesPersonName, double subTotal, double fees, double taxes, double discount, double total) {
-        super(invoiceCode, customerCode, salespersonCode, invoiceDate, productList, customerList, personList);
+    public Summary(String invoiceCode, String customerCode, String salespersonCode, String invoiceDate, ArrayList<Customer> customerList, ArrayList<Person> personList, String invoiceID, String customerName, String salesPersonName, double subTotal, double fees, double taxes, double discount, double total) {
+        super(invoiceCode, customerCode, salespersonCode, invoiceDate, customerList, personList);
         this.invoiceID = invoiceID;
         this.customerName = customerName;
         this.salesPersonName = salesPersonName;
@@ -29,13 +29,15 @@ public class Summary extends Invoice {
         this.total = total;
     }
 
-    public String getCustomerName() {
-        for(Customer c : this.customerList) {
-            if(c.getName())
-        }
-
-
+    public Summary(ArrayList<Invoice> invoiceList, String invoiceID, String customerName, String salesPersonName, double subTotal, double fees, double taxes, double discount, double total) {
+        super(invoiceList);
+        this.invoiceID = invoiceID;
+        this.customerName = customerName;
+        this.salesPersonName = salesPersonName;
+        this.subTotal = subTotal;
+        this.fees = fees;
+        this.taxes = taxes;
+        this.discount = discount;
+        this.total = total;
     }
-
-
 }

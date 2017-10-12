@@ -9,6 +9,7 @@ import dataContainer.Address;
 import dataContainer.Customer;
 import dataContainer.Name;
 import dataContainer.Person;
+import invoice.Invoice;
 import products.MovieTicket;
 import products.ParkingPass;
 import products.Product;
@@ -27,6 +28,44 @@ public class FlatFileReader {
 //	String personFile = "data/Persons.dat";
 //	String productFile = "data/Products.dat";
 //	String customerFile = "data/Customers.dat";
+
+	public ArrayList<Invoice> readInvoice(ArrayList<Person> personList, ArrayList<Customer> customerList, ArrayList<Product> productList) {
+		Scanner invoiceScanner = null;
+		String invoiceFile = "data/Invoices.dat";
+
+		try {
+			invoiceScanner = new Scanner(new File(invoiceFile));
+			invoiceScanner.nextLine();
+
+			ArrayList<Invoice> invoiceList = new ArrayList<Invoice>();
+
+			while(invoiceScanner.hasNext()) {
+				String line = invoiceScanner.nextLine();
+				String data[] = line.trim().split(";");
+
+				String invoiceCode = data[0];
+				String customerCode = data[1];
+				String personCode = data[2];
+				String invoiceDate = data[3];
+
+				ArrayList<String> product = new ArrayList<String>();
+				String products[] = data[4].split(",");
+				for(int i = 0; i < products.length; i++) {
+					product.add(products[i]);
+				}
+
+				Invoice invoice = new Invoice(invoiceCode, customerCode, personCode, invoiceDate, customerList, personList);
+				invoiceList.add(invoice);
+			}
+
+			return invoiceList;
+
+
+		} catch(FileNotFoundException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 	public ArrayList<Person> readPersons() {
 
