@@ -1,20 +1,28 @@
 package invoice;
 
+import dataContainer.Customer;
+import dataContainer.Person;
+import products.Product;
+
 import java.util.ArrayList;
 
-public class Invoice {
-    private String invoiceCode;
-    private String customerCode;
-    private String salespersonCode;
-    private String invoiceDate;
-    private ArrayList<String> productList;
+public abstract class Invoice {
+    protected String invoiceCode;
+    protected String customerCode;
+    protected String salespersonCode;
+    protected String invoiceDate;
+    protected ArrayList<Product> productList;
+    protected ArrayList<Customer> customerList;
+    protected ArrayList<Person> personList;
 
-    public Invoice(String invoiceCode, String customerCode, String salespersonCode, String invoiceDate, ArrayList<String> productList) {
+    public Invoice(String invoiceCode, String customerCode, String salespersonCode, String invoiceDate, ArrayList<Product> productList, ArrayList<Customer> customerList, ArrayList<Person> personList) {
         this.invoiceCode = invoiceCode;
         this.customerCode = customerCode;
         this.salespersonCode = salespersonCode;
         this.invoiceDate = invoiceDate;
         this.productList = productList;
+        this.customerList = customerList;
+        this.personList = personList;
     }
 
     public String getInvoiceCode() {
@@ -45,22 +53,12 @@ public class Invoice {
         this.invoiceDate = invoiceDate;
     }
 
-    public ArrayList<String> getProductList() {
+    public ArrayList<Product> getProductList() {
         return productList;
     }
-    public void setProductList(ArrayList<String> productList) {
+    public void setProductList(ArrayList<Product> productList) {
         this.productList = productList;
     }
 
-    public void getSummaryReport() {
-        System.out.println("Executive Summary Report");
-        System.out.println(
-                String.format("%-10s %-30s %-20s %-15s %-15s %-15s %-15s %-15s", "Invoice", "Customer", "Salesperson", "Subtotal", "Fees", "Taxes", "Discount", "Total")
-        );
 
-
-//        Iterate through customers
-
-        System.out.println("TOTALS");
-    }
 }
