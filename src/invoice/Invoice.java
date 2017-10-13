@@ -1,6 +1,6 @@
 package invoice;
 
-import dataContainer.Customer;
+import customer.Customer;
 import dataContainer.Person;
 import products.Product;
 
@@ -16,7 +16,7 @@ public class Invoice {
     private ArrayList<Person> personList;
     private ArrayList<Invoice> invoiceList;
 
-    public Invoice(String invoiceCode, String customerCode, String salespersonCode, String invoiceDate, ArrayList<Customer> customerList, ArrayList<Person> personList) {
+    public Invoice(String invoiceCode, String customerCode, String salespersonCode, String invoiceDate, ArrayList<Customer> customerList, ArrayList<Person> personList, ArrayList<Product> productList) {
         this.invoiceCode = invoiceCode;
         this.customerCode = customerCode;
         this.salespersonCode = salespersonCode;
@@ -31,6 +31,7 @@ public class Invoice {
     }
 
 
+//    Summary Report Methods
 
     public String getCustomerName() {
         for(Customer c : this.customerList) {
@@ -52,12 +53,40 @@ public class Invoice {
         return "This is not a person ";
     }
 
-    public void getSummaryReport() {
-        System.out.println("INVOICE NUMBER - CUSTOMER NAME - SALESPERSON");
-        for(Invoice i : this.invoiceList) {
-            System.out.println(i.getInvoiceCode() + " - " + i.getCustomerName() + " - " + i.getSalesPersonName());
+
+//      Detailed Report Methods
+
+    public String getCustomerFullName() {
+        for(Customer c : this.getCustomerList()) {
+            if(c.getCustomerCode().equals(this.getCustomerCode())) {
+                return c.getContact().getLastName() + ", " + c.getContact().getFirstName();
+            }
         }
+
+        return "This person does not exist";
     }
+
+    public String getCustomerType() {
+        for(Customer c : this.getCustomerList()) {
+            if(c.getCustomerCode().equals(this.getCustomerCode())) {
+                return c.getType();
+            }
+        }
+
+        return "No Type";
+    }
+
+    public String getCustomerAddress() {
+        for(Customer c : this.getCustomerList()) {
+            if(c.getCustomerCode().equals(this.getCustomerCode())) {
+                return c.getAddress().getFullAddress();
+            }
+        }
+
+        return "No Address";
+    }
+
+//    Getter and Setter Methods
 
     public String getInvoiceCode() {
         return invoiceCode;
@@ -94,5 +123,27 @@ public class Invoice {
         this.productList = productList;
     }
 
+    public ArrayList<Customer> getCustomerList() {
+        return customerList;
+    }
 
+    public void setCustomerList(ArrayList<Customer> customerList) {
+        this.customerList = customerList;
+    }
+
+    public ArrayList<Person> getPersonList() {
+        return personList;
+    }
+
+    public void setPersonList(ArrayList<Person> personList) {
+        this.personList = personList;
+    }
+
+    public ArrayList<Invoice> getInvoiceList() {
+        return invoiceList;
+    }
+
+    public void setInvoiceList(ArrayList<Invoice> invoiceList) {
+        this.invoiceList = invoiceList;
+    }
 }

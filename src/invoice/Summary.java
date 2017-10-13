@@ -1,9 +1,8 @@
 package invoice;
 
 import java.util.ArrayList;
-import dataContainer.Customer;
+
 import dataContainer.Person;
-import products.Product;
 
 public class Summary extends Invoice {
 
@@ -29,15 +28,15 @@ public class Summary extends Invoice {
         this.total = total;
     }
 
-    public Summary(ArrayList<Invoice> invoiceList, String invoiceID, String customerName, String salesPersonName, double subTotal, double fees, double taxes, double discount, double total) {
+    public Summary(ArrayList<Invoice> invoiceList) {
         super(invoiceList);
-        this.invoiceID = invoiceID;
-        this.customerName = customerName;
-        this.salesPersonName = salesPersonName;
-        this.subTotal = subTotal;
-        this.fees = fees;
-        this.taxes = taxes;
-        this.discount = discount;
-        this.total = total;
+
+    }
+
+    public void getSummaryReport() {
+        System.out.println("INVOICE NUMBER - CUSTOMER NAME - SALESPERSON");
+        for(Invoice i : this.getInvoiceList()) {
+            System.out.println(i.getInvoiceCode() + " - " + i.getCustomerName() + " - " + i.getSalesPersonName());
+        }
     }
 }

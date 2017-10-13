@@ -1,11 +1,14 @@
 package reports;
 
 import java.util.ArrayList;
-import dataContainer.Customer;
+
+import customer.Customer;
 import dataContainer.Person;
 import fileReader.FlatFileReader;
 
+import invoice.Detail;
 import invoice.Invoice;
+import invoice.Summary;
 import products.Product;
 
 public class DataConverter {
@@ -28,9 +31,12 @@ public class DataConverter {
 		ArrayList<Product> productList = fr.readProducts();
 		ArrayList<Invoice> invoiceList = fr.readInvoice(personList, customerList, productList);
 
-		Invoice invoice = new Invoice(invoiceList);
+		Summary summary = new Summary(invoiceList);
 
-		invoice.getSummaryReport();
+		summary.getSummaryReport();
+
+		Detail detail = new Detail(invoiceList);
+		detail.getDetailReport();
 
 //		XMLWriter xmlWriter = new XMLWriter();
 //		JsonWriter jWriter = new JsonWriter();

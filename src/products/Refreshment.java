@@ -1,12 +1,12 @@
 package products;
 
-public class Refreshment extends Product {
+public class Refreshment extends Service {
 
 	private String name;
 	private double cost;
 
-	public Refreshment(String productCode, String name, double cost) {
-		super(productCode);
+	public Refreshment(String productCode, String productType, String name, double cost) {
+		super(productCode,productType);
 		this.name = name;
 		this.cost = cost;
 	}
@@ -18,10 +18,4 @@ public class Refreshment extends Product {
 	public double getCost() {
 		return cost;
 	}
-
-	@Override
-	public String getProductType() {
-		return "Refreshment";
-	}
-
 }
