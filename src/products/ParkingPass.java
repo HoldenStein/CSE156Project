@@ -1,12 +1,12 @@
 package products;
 
-public class ParkingPass extends Product {
+public class ParkingPass extends Service {
 
 	private String code;
 	private double parkingFee;
 
-	public ParkingPass(String productCode, double parkingFee) {
-		super(productCode);
+	public ParkingPass(String productCode,String productType, double parkingFee) {
+		super(productCode,productType);
 		this.parkingFee = parkingFee;
 	}
 
@@ -17,10 +17,4 @@ public class ParkingPass extends Product {
 	public double getParkingFee() {
 		return parkingFee;
 	}
-
-	@Override
-	public String getProductType() {
-		return "Parking Pass";
-	}
-
 }

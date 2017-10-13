@@ -1,11 +1,12 @@
 package reports;
 
 import java.util.ArrayList;
-import dataContainer.Customer;
+
+import customer.Customer;
 import dataContainer.Person;
 import fileReader.FlatFileReader;
-import fileWriter.JsonWriter;
-import fileWriter.XMLWriter;
+
+import invoice.Detail;
 import invoice.Invoice;
 import invoice.Summary;
 import products.Product;
@@ -28,14 +29,18 @@ public class DataConverter {
 		ArrayList<Person> personList = fr.readPersons();
 		ArrayList<Customer> customerList = fr.readCustomers(personList);
 		ArrayList<Product> productList = fr.readProducts();
-		ArrayList<Invoice> invoiceList = fr.readInvoices(personList, customerList);
+		ArrayList<Invoice> invoiceList = fr.readInvoice(personList, customerList, productList);
 
-		Invoice invoice = new Invoice(invoiceList);
-		invoice.getSummaryReport();
+		Summary summary = new Summary(invoiceList);
 
-		XMLWriter xmlWriter = new XMLWriter();
-		JsonWriter jWriter = new JsonWriter();
+		summary.getSummaryReport();
 
+		Detail detail = new Detail(invoiceList);
+		detail.getDetailReport();
+
+//		XMLWriter xmlWriter = new XMLWriter();
+//		JsonWriter jWriter = new JsonWriter();
+//
 //		// Write Person ArrayList into a Json file
 //		jWriter.jsonConverter(personList, personJsonOut);
 //

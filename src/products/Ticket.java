@@ -1,12 +1,13 @@
 package products;
 
-public class Product {
+public abstract class Ticket implements Product {
+
 	private String productCode;
 	private String productType;
 
-	public Product(String productCode) {
+	public Ticket(String productCode, String productType) {
 		this.productCode = productCode;
-
+		this.productType = productType;
 	}
 
 	public String getProductCode() {
@@ -16,4 +17,5 @@ public class Product {
 	public String getProductType() {
 		return productType;
 	}
+
 }

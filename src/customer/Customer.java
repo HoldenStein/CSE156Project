@@ -1,18 +1,22 @@
-package dataContainer;
+package customer;
 
-public class Customer {
+import dataContainer.Address;
+import dataContainer.Person;
+
+public class Customer{
 
 	private String customerCode;
-	private String type; // later usage
+	private String type;
 	private Person Contact;
 	private String customerName;
 	private Address address;
 
-	public Customer(String customerCode, Person contact, String name, Address address) {
+	public Customer(String customerCode,String type, Person contact, String name, Address address) {
 		this.customerCode = customerCode;
 		this.Contact = contact;
 		this.customerName = name;
 		this.address = address;
+		this.type = type;
 	}
 
 	// setters and getter
@@ -27,11 +31,6 @@ public class Customer {
 	public Person getContact() {
 		return Contact;
 	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
 	public void setCustomerCode(String customerCode) {
 		this.customerCode = customerCode;
 	}
@@ -55,5 +54,7 @@ public class Customer {
 	public void setAddress(Address address) {
 		this.address = address;
 	}
+
+
 
 }

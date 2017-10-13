@@ -1,25 +1,30 @@
 package products;
 
+import org.joda.time.DateTime;
+
 import dataContainer.Address;
 
-public class MovieTicket extends Product {
-	private String movieDateTime;
+public class MovieTicket extends Ticket {
+	private DateTime movieDateTime;
 	private String movieName;
 	private Address address;
 	private String screenNumber;
 	private double pricePerUnit;
 
-	public MovieTicket(String productCode, String movieDateTime, String movieName, Address address, String screenNumber,
-			double perPerUnit) {
-		super(productCode);
+	
+	public MovieTicket(String productCode, String productType, DateTime movieDateTime, String movieName, Address address, String screenNumber,
+			double pricePerUnit ) {
+		super(productCode,productType);
+		
 		this.movieDateTime = movieDateTime;
 		this.movieName = movieName;
 		this.address = address;
 		this.screenNumber = screenNumber;
-		this.pricePerUnit = perPerUnit;
+		this.pricePerUnit = pricePerUnit;
+		
 	}
 
-	public String getMovieDateTime() {
+	public DateTime getMovieDateTime() {
 		return movieDateTime;
 	}
 
@@ -35,13 +40,9 @@ public class MovieTicket extends Product {
 		return screenNumber;
 	}
 
-	public double getPerPerUnit() {
+	public double getPricePerUnit() {
 		return pricePerUnit;
 	}
 
-	@Override
-	public String getProductType() {
-		return "Movie Ticket";
-	}
 
 }
