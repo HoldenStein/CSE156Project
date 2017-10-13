@@ -38,6 +38,9 @@ public class DataConverter {
 		Detail detail = new Detail(invoiceList);
 		detail.getDetailReport();
 
+
+
+
 //		XMLWriter xmlWriter = new XMLWriter();
 //		JsonWriter jWriter = new JsonWriter();
 //

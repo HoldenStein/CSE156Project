@@ -15,7 +15,16 @@ public abstract class Service implements Product{
 	}
 
 	public String getProductType() {
-		return productType;
+		if(this.productType.equals("P")) {
+			return "ParkingPass";
+		} else if(this.productType.equals("R")) {
+			return "Refreshment";
+		}
+		return this.productType;
+	}
+
+	public String getProduct() {
+		return "Service";
 	}
 
 }

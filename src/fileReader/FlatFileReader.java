@@ -52,13 +52,13 @@ public class FlatFileReader {
 				String personCode = data[2];
 				String invoiceDate = data[3];
 
-				ArrayList<String> product = new ArrayList<String>();
+				ArrayList<String> productCodes = new ArrayList<String>();
 				String products[] = data[4].split(",");
 				for(int i = 0; i < products.length; i++) {
-					product.add(products[i]);
+					productCodes.add(products[i]);
 				}
 
-				Invoice invoice = new Invoice(invoiceCode, customerCode, personCode, invoiceDate, customerList, personList);
+				Invoice invoice = new Invoice(invoiceCode, customerCode, personCode, invoiceDate, customerList, personList, productList, productCodes);
 				invoiceList.add(invoice);
 			}
 
@@ -217,17 +217,17 @@ public class FlatFileReader {
 
 				if (productType.equals("M")) {
 
-//					Parese the String to date time
+//					Parses the String to date time
 					DateTime movieDateTime = DateTime.parse(data[2], DateTimeFormat.forPattern("yyyy-MM-dd HH:mm"));
 
 					String movieName = data[3];
 
 					Address address = new Address(data[4]);
 					String screenNumber = data[5];
-					double perPerUnit = Double.parseDouble(data[6]);
+					double pricePerUnit = Double.parseDouble(data[6]);
 
 					MovieTicket movieTicket = new MovieTicket(productCode,productType, movieDateTime, movieName, address,
-							screenNumber, perPerUnit);
+							screenNumber, pricePerUnit);
 
 					productList.add(movieTicket);
 

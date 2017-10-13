@@ -10,11 +10,20 @@ public class ParkingPass extends Service {
 		this.parkingFee = parkingFee;
 	}
 
-	public String getCode() {
-		return code;
+	@Override
+	public String getProduct() {
+		return this.getProductType();
 	}
 
-	public double getParkingFee() {
-		return parkingFee;
+	@Override
+	public double getCost() {
+		return this.parkingFee;
 	}
+
+	@Override
+	public double getTax() {
+		return 0.04;
+	}
+
+
 }

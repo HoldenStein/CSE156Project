@@ -17,20 +17,31 @@ public class SeasonPass extends Ticket {
 		this.cost = cost;
 	}
 
+	@Override
+	public String getProduct() {
+		return this.getProductType() + " " + this.name + ", Start Date: " + this.startDate.toString("MMM dd, yyyy") + " - End Date:" + this.endDate.toString("MMM dd, yyyy");
+	}
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public DateTime getStartDate() {
-		return startDate;
+		return this.startDate;
 	}
 
 	public DateTime getEndDate() {
-		return endDate;
+		return this.endDate;
 	}
 
+
+	@Override
 	public double getCost() {
-		return cost;
+		return this.cost;
+	}
+
+	@Override
+	public double getTax() {
+		return 0.06;
 	}
 
 }

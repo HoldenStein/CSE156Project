@@ -24,24 +24,37 @@ public class MovieTicket extends Ticket {
 		
 	}
 
+
+	@Override
+	public String getProduct() {
+		return this.getProductType() + " - " + this.movieName + " - " + "@" + this.address.getFullAddress() + ", " + this.movieDateTime.toString("MMM dd, yyyy HH:mm");
+	}
+
+
 	public DateTime getMovieDateTime() {
-		return movieDateTime;
+		return this.movieDateTime;
 	}
 
 	public String getMovieName() {
-		return movieName;
+		return this.movieName;
 	}
 
 	public Address getAddress() {
-		return address;
+		return this.address;
 	}
 
 	public String getScreenNumber() {
-		return screenNumber;
+		return this.screenNumber;
 	}
 
-	public double getPricePerUnit() {
-		return pricePerUnit;
+	@Override
+	public double getCost() {
+		return this.pricePerUnit;
+	}
+
+	@Override
+	public double getTax() {
+		return 0.06;
 	}
 
 

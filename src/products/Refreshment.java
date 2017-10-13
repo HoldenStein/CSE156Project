@@ -11,11 +11,21 @@ public class Refreshment extends Service {
 		this.cost = cost;
 	}
 
+	@Override
+	public String getProduct() {
+		return this.name;
+	}
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
+	@Override
 	public double getCost() {
-		return cost;
+		return this.cost;
+	}
+
+	@Override
+	public double getTax() {
+		return 0.04;
 	}
 }

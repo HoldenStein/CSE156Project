@@ -15,7 +15,16 @@ public abstract class Ticket implements Product {
 	}
 
 	public String getProductType() {
+		if(this.productType.equals("M")) {
+			return "MovieTicket";
+		} else if(this.productType.equals("S")) {
+			return "SeasonPass";
+		}
 		return productType;
+	}
+
+	public String getProduct() {
+		return "Ticket";
 	}
 
 }
