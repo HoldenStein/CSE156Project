@@ -1,26 +1,96 @@
 package products;
 
-public class ParkingPass extends Product {
+public class ParkingPass extends Service {
 
-	private String code;
 	private double parkingFee;
 
-	public ParkingPass(String productCode, double parkingFee) {
-		super(productCode);
+	private boolean hasTicket;
+	private double numOfTicket;
+	private double detailSubTotal;
+	private String ticketCode;
+	private int itemCount;
+
+	private int numOfFreeParking;
+
+	public ParkingPass(String productCode, String productType, double parkingFee) {
+		super(productCode, productType);
 		this.parkingFee = parkingFee;
 	}
 
-	public String getCode() {
-		return code;
-	}
+	@Override
+	public double getTotalCost() {
 
-	public double getParkingFee() {
-		return parkingFee;
+		double totalCost = detailSubTotal + getProductTax();
+
+		return totalCost;
 	}
 
 	@Override
-	public String getProductType() {
-		return "Parking Pass";
+	public double getProductTax() {
+		double tax = this.detailSubTotal * getServiceTax();
+		return tax;
+	}
+
+	public void setHasTicket(boolean hasTicket) {
+		this.hasTicket = hasTicket;
+	}
+
+	public boolean getHasTicket() {
+
+		return this.hasTicket;
+	}
+
+	public double getParkingFee() {
+		return this.parkingFee;
+	}
+
+	public String getName() {
+
+		return "ParkingPass";
+	}
+
+	public double getDetailSubTotal() {
+		return this.detailSubTotal;
+	}
+
+	public void setDetailSubTotal(double detailSubTotal) {
+		this.detailSubTotal = detailSubTotal;
+	}
+
+	public double getNumOfTicket() {
+		return this.numOfTicket;
+	}
+
+	public void setNumOfTicket(double numOfTicket) {
+		this.numOfTicket = numOfTicket;
+	}
+
+	public String getProductTypeName() {
+		return "ParkingPass";
+	}
+
+	public String getTicketCode() {
+		return this.ticketCode;
+	}
+
+	public void setTicketCode(String ticketCode) {
+		this.ticketCode = ticketCode;
+	}
+
+	public int getItemCount() {
+		return this.itemCount;
+	}
+
+	public void setItemCount(int itemCount) {
+		this.itemCount = itemCount;
+	}
+
+	public int getNumOfFreeParking() {
+		return this.numOfFreeParking;
+	}
+
+	public void setNumOfFreeParking(int numOfFreeParking) {
+		this.numOfFreeParking = numOfFreeParking;
 	}
 
 }

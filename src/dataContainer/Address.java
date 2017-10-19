@@ -40,4 +40,8 @@ public class Address {
 		return country;
 	}
 
+	public String getFullAddress() {
+		return this.city + " " + this.state + " " + this.zip + " " + this.country;
+	}
+
 }

@@ -9,7 +9,7 @@ import com.thoughtworks.xstream.XStream;
 
 public class XMLWriter {
 
-	public void xmlConverter(List type, String outPutFile, String alias) {
+	public <T> void xmlConverter(List<T> type, String outPutFile, String alias) {
 
 		XStream xstream = new XStream();
 

@@ -10,7 +10,7 @@ import com.google.gson.GsonBuilder;
 
 public class JsonWriter {
 	// redefine to make generic
-	public void jsonConverter(List type, String outputFileName) {
+	public <T> void jsonConverter(List<T> type, String outputFileName) {
 
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		File jsonOutput = new File(outputFileName);
