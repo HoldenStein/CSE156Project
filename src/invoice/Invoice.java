@@ -87,6 +87,8 @@ public class Invoice {
 						// Check if the movie is on a Tuesday or Thursday to apply discount
 						if (dayOfWeek == 2 || dayOfWeek == 4) {
 
+							movieTicket.setHasDiscount(true);
+
 							double detailSubTotal = movieTicket.getPricePerUnit() * itemCount
 									* (1 - movieTicket.getDiscount());
 
@@ -105,6 +107,8 @@ public class Invoice {
 							invoiceProductInfo.add(movieTicket);
 
 						} else {
+
+							movieTicket.setHasDiscount(false);
 
 							double detailSubTotal = movieTicket.getPricePerUnit() * itemCount;
 							double discountAmount = movieTicket.getPricePerUnit() * itemCount
@@ -323,9 +327,11 @@ public class Invoice {
 
 				double studentTotalSubTotal = (totalDetailCost * (1 - getStudentDiscount())) + getStudentFee();
 				double studentDiscountAmount = (totalDetailCost * (getStudentDiscount()));
+
 				setFinalTotal(studentTotalSubTotal);
 				setTotalDetailCost(totalDetailCost);
 				setTotalTaxAmount(totalTaxAmount);
+
 				setTotalSubTotal(totalDetailCost + totalTaxAmount);
 				setTotalDiscountAmount((studentDiscountAmount + totalTaxAmount) * -1);
 
@@ -474,7 +480,10 @@ public class Invoice {
 	public String getCustomerAddress() {
 		for (Customer c : this.getCustomerList()) {
 			if (c.getCustomerCode().equals(this.getCustomerCode())) {
-				return c.getAddress().getFullAddress();
+				String fullAddress = String.format("%s %n  %s %s %s %s", c.getAddress().getStreet(),
+						c.getAddress().getCity(), c.getAddress().getState(), c.getAddress().getZip(),
+						c.getAddress().getCountry());
+				return fullAddress;
 			}
 		}
 

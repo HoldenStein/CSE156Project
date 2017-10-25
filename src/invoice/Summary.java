@@ -54,7 +54,7 @@ public class Summary extends Invoice {
 					i.getFees(), "$", i.getTotalTaxAmount(), "$", i.getTotalDiscountAmount(), "$",
 					i.getTotalSubTotal());
 
-			grandTotalString = String.format("%n%-85s %-4s %10.2f %s %10.2f %s %10.2f %s %10.2f %s %10.2f %n", " ", "$",
+			grandTotalString = String.format("%n%-85s %-4s %10.2f %s %10.2f %s %10.2f %s %10.2f %s %10.2f %n", "TOTALS", "$",
 					totalSubTotal, "$", totalFees, "$", totalTaxes, "$", totalDiscount, "$", grandTotal);
 		}
 

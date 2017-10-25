@@ -11,8 +11,6 @@ import products.SeasonPass;
 
 import java.util.ArrayList;
 
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane.SystemMenuBar;
-
 import org.joda.time.DateTime;
 
 public class Detail extends Invoice {
@@ -62,17 +60,35 @@ public class Detail extends Invoice {
 							Address address = movieTicket.getAddress();
 							DateTime date = movieTicket.getMovieDateTime();
 
-							String itemsString = movieTicket.getProductTypeName() + " " + "'"
-									+ movieTicket.getMovieName() + " @ " + address.getStreet();
+							if (movieTicket.getHasDiscounted() == true) {
 
-							System.out.printf("%-11s%-79s%s%8.2f%5s%8.2f%5s%8.2f", movieTicket.getProductCode(),
-									itemsString, "$", movieTicket.getDetailSubTotal(), "$", movieTicket.getProductTax(),
-									"$", movieTicket.getTotalCost());
+								String itemsString = movieTicket.getProductTypeName() + " " + "'"
+										+ movieTicket.getMovieName() + " @ " + address.getStreet();
 
-							System.out.printf("%n %13s %s,%s %s:%02d (%s units @ $%s/units)%n",
-									date.monthOfYear().getAsShortText(), date.getDayOfMonth(), date.getYear(),
-									date.getHourOfDay(), date.getMinuteOfHour(), movieTicket.getItemCount(),
-									movieTicket.getPricePerUnit());
+								System.out.printf("%-11s%-79s%s%8.2f%5s%8.2f%5s%8.2f", movieTicket.getProductCode(),
+										itemsString, "$", movieTicket.getDetailSubTotal(), "$",
+										movieTicket.getProductTax(), "$", movieTicket.getTotalCost());
+
+								System.out.printf("%n %13s %s,%s %s:%02d (%s unit(s) @ $%.2f/unit - Tue/Thu 7%% off)%n",
+										date.monthOfYear().getAsShortText(), date.getDayOfMonth(), date.getYear(),
+										date.getHourOfDay(), date.getMinuteOfHour(), movieTicket.getItemCount(),
+										movieTicket.getPricePerUnit());
+
+							} else if (movieTicket.getHasDiscounted() == false) {
+
+								String itemsString = movieTicket.getProductTypeName() + " " + "'"
+										+ movieTicket.getMovieName() + " @ " + address.getStreet();
+
+								System.out.printf("%-11s%-79s%s%8.2f%5s%8.2f%5s%8.2f", movieTicket.getProductCode(),
+										itemsString, "$", movieTicket.getDetailSubTotal(), "$",
+										movieTicket.getProductTax(), "$", movieTicket.getTotalCost());
+
+								System.out.printf("%n %13s %s,%s %s:%02d (%s unit(s) @ $%.2f/unit)%n",
+										date.monthOfYear().getAsShortText(), date.getDayOfMonth(), date.getYear(),
+										date.getHourOfDay(), date.getMinuteOfHour(), movieTicket.getItemCount(),
+										movieTicket.getPricePerUnit());
+
+							}
 
 						}
 						if (p.getProductType().equals("P")) {
@@ -81,9 +97,10 @@ public class Detail extends Invoice {
 
 							if (parkingPass.getHasTicket()) {
 
-								String itemString = parkingPass.getProductTypeName() + " " + parkingPass.getTicketCode()
-										+ " (" + parkingPass.getItemCount() + " units @ " + parkingPass.getParkingFee()
-										+ " with " + parkingPass.getNumOfFreeParking() + " free)";
+								String itemString = String.format("%s %s (%s unit(s) @ $%.2f with %s free)",
+										parkingPass.getProductTypeName(), parkingPass.getTicketCode(),
+										parkingPass.getItemCount(), parkingPass.getParkingFee(),
+										parkingPass.getNumOfFreeParking());
 
 								System.out.printf("%-11s%-79s%s%8.2f%5s%8.2f%5s%8.2f%n", parkingPass.getProductCode(),
 										itemString, "$", parkingPass.getDetailSubTotal(), "$",
@@ -91,8 +108,9 @@ public class Detail extends Invoice {
 
 							} else {
 
-								String itemString = parkingPass.getProductTypeName() + " (" + parkingPass.getItemCount()
-										+ " units @ " + parkingPass.getParkingFee() + ")";
+								String itemString = String.format("%s (%s unit(s) @ $%.2f)",
+										parkingPass.getProductTypeName(), parkingPass.getItemCount(),
+										parkingPass.getParkingFee());
 
 								System.out.printf("%-11s%-79s%s%8.2f%5s%8.2f%5s%8.2f%n", parkingPass.getProductCode(),
 										itemString, "$", parkingPass.getDetailSubTotal(), "$",
@@ -112,7 +130,7 @@ public class Detail extends Invoice {
 										itemString, "$", seasonPass.getDetailSubTotal(), "$",
 										seasonPass.getProductTax(), "$", seasonPass.getTotalCost());
 
-								System.out.printf("%-11s(%s units @ $%s/unit prorated %s/%s days + $8 fee/unit) %n",
+								System.out.printf("%-11s(%s unit(s) @ $%.2f/unit prorated %s/%s days + $8 fee/unit) %n",
 										" ", seasonPass.getItemCount(), seasonPass.getCost(),
 										seasonPass.getDaysRemaining(), seasonPass.getTotalSeasonDays());
 							} else {
@@ -121,7 +139,7 @@ public class Detail extends Invoice {
 										itemString, "$", seasonPass.getDetailSubTotal(), "$",
 										seasonPass.getProductTax(), "$", seasonPass.getTotalCost());
 
-								System.out.printf("%-11s(%s units @ $%s/unit + $8 fee/unit) %n", " ",
+								System.out.printf("%-11s(%s unit(s) @ $%.2f/unit + $8 fee/unit) %n", " ",
 										seasonPass.getItemCount(), seasonPass.getCost());
 
 							}
@@ -133,8 +151,8 @@ public class Detail extends Invoice {
 
 							if (refreshment.isHasDiscount()) {
 
-								String itemString = refreshment.getName() + " (" + refreshment.getItemCount()
-										+ " units @ " + refreshment.getCost() + "/unit with 5% off)";
+								String itemString = String.format("%s (%s unit(s) @ $%.2f/unit with 5%% off)",
+										refreshment.getName(), refreshment.getItemCount(), refreshment.getCost());
 
 								System.out.printf("%-11s%-79s%s%8.2f%5s%8.2f%5s%8.2f%n", refreshment.getProductCode(),
 										itemString, "$", refreshment.getDetailSubTotal(), "$",
@@ -142,8 +160,8 @@ public class Detail extends Invoice {
 
 							} else {
 
-								String itemString = refreshment.getName() + " (" + refreshment.getItemCount()
-										+ " units @ " + refreshment.getCost() + ")";
+								String itemString = String.format("%s (%s unit(s) @ $%.2f/unit)", refreshment.getName(),
+										refreshment.getItemCount(), refreshment.getCost());
 
 								System.out.printf("%-11s%-79s%s%8.2f%5s%8.2f%5s%8.2f%n", refreshment.getProductCode(),
 										itemString, "$", refreshment.getDetailSubTotal(), "$",
