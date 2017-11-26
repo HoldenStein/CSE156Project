@@ -3,10 +3,10 @@ package customer;
 import dataContainer.Address;
 import dataContainer.Person;
 
-public class General extends Customer{
+public class General extends Customer {
 
-	public General(String customerCode, String type, Person contact, String name, Address address) {
+	public General(String customerCode, String customerType, Person contact, String name, Address address) {
 
-		super(customerCode, type, contact, name, address);
+		super(customerCode, customerType, contact, name, address);
 	}
 }

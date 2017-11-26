@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import customer.Customer;
+import customer.General;
+import customer.Student;
 import dataContainer.Address;
 import dataContainer.Name;
 import dataContainer.Person;
@@ -18,22 +20,10 @@ import products.Product;
 import products.Refreshment;
 import products.SeasonPass;
 
-import static org.joda.time.format.DateTimeFormat.forPattern;
-
 public class FlatFileReader {
 
-//	Should put these within there respective methods, or made private
-
-//	Scanner personScanner = null;
-//	Scanner productScanner = null;
-//	Scanner customerScanner = null;
-//
-//
-//	String personFile = "data/Persons.dat";
-//	String productFile = "data/Products.dat";
-//	String customerFile = "data/Customers.dat";
-
-	public ArrayList<Invoice> readInvoice(ArrayList<Person> personList, ArrayList<Customer> customerList, ArrayList<Product> productList) {
+	public ArrayList<Invoice> readInvoice(ArrayList<Person> personList, ArrayList<Customer> customerList,
+			ArrayList<Product> productList) {
 		Scanner invoiceScanner = null;
 		String invoiceFile = "data/Invoices.dat";
 
@@ -43,29 +33,34 @@ public class FlatFileReader {
 
 			ArrayList<Invoice> invoiceList = new ArrayList<Invoice>();
 
-			while(invoiceScanner.hasNext()) {
+			while (invoiceScanner.hasNext()) {
 				String line = invoiceScanner.nextLine();
-				String data[] = line.trim().split(";");
+				String data[] = line.trim().split(";"); // tokenizes the line and stores in a string array
 
 				String invoiceCode = data[0];
 				String customerCode = data[1];
 				String personCode = data[2];
-				String invoiceDate = data[3];
+				// Format our date information as a TimeDate
+				DateTime invoiceDate = DateTime.parse(data[3], DateTimeFormat.forPattern("yyyy-MM-dd"));
 
-				ArrayList<String> productCodes = new ArrayList<String>();
+				ArrayList<String> productPurchased = new ArrayList<String>();
+				// parse by comma
 				String products[] = data[4].split(",");
-				for(int i = 0; i < products.length; i++) {
-					productCodes.add(products[i]);
+
+				for (int i = 0; i < products.length; i++) {
+					productPurchased.add(products[i]);
 				}
 
-				Invoice invoice = new Invoice(invoiceCode, customerCode, personCode, invoiceDate, customerList, personList, productList, productCodes);
+				Invoice invoice = new Invoice(invoiceCode, customerCode, personCode, invoiceDate, customerList,
+						personList, productList, productPurchased);
+				// Adds the invoice object into invoice ArrayList
 				invoiceList.add(invoice);
 			}
 
+			invoiceScanner.close(); // close scanner after done
 			return invoiceList;
 
-
-		} catch(FileNotFoundException e) {
+		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			return null;
 		}
@@ -73,7 +68,6 @@ public class FlatFileReader {
 
 	public ArrayList<Person> readPersons() {
 
-//		I moved the personScanner, and personFile to inside the method
 		Scanner personScanner = null;
 		String personFile = "data/Persons.dat";
 
@@ -141,7 +135,7 @@ public class FlatFileReader {
 
 	public ArrayList<Customer> readCustomers(ArrayList<Person> personsList) {
 
-//		Moved the customerScanner, and customer file to the method
+		// Moved the customerScanner, and customer file to the method
 		Scanner customerScanner = null;
 		String customerFile = "data/Customers.dat";
 		try {
@@ -169,21 +163,41 @@ public class FlatFileReader {
 
 				// Person contact
 				Person contactPerson = null;
-				for (Person person : personsList) {
-					if (person.getPersonCode().equals(contactCode)) {
-						contactPerson = person;
-						break;
+
+				if (customerType.equals("S")) {
+					for (Person person : personsList) {
+						if (person.getPersonCode().equals(contactCode)) {
+							contactPerson = person;
+							break;
+						}
 					}
-				}
-				if (contactPerson != null) {
-					customer = new Customer(customerCode, customerType, contactPerson, customerName, address);
-				} else {
-					System.out.println("For some reason there is no contact person -_- " + contactCode);
-				}
+					if (contactPerson != null) {
+						customer = new Student(customerCode, customerType, contactPerson, customerName, address);
+					} else {
+						System.out.println("For some reason there is no contact person -_- " + contactCode);
+					}
 
-				// Adds the customer object into customer ArrayList
-				customerList.add(customer);
+					// Adds the customer object into customer ArrayList
+					customerList.add(customer);
 
+				} else if (customerType.equals("G")) {
+
+					for (Person person : personsList) {
+						if (person.getPersonCode().equals(contactCode)) {
+							contactPerson = person;
+							break;
+						}
+					}
+					if (contactPerson != null) {
+						customer = new General(customerCode, customerType, contactPerson, customerName, address);
+					} else {
+						System.out.println("For some reason there is no contact person -_- " + contactCode);
+					}
+
+					// Adds the customer object into customer ArrayList
+					customerList.add(customer);
+
+				}
 			}
 			customerScanner.close();
 			return customerList;
@@ -215,9 +229,10 @@ public class FlatFileReader {
 				String productCode = data[0];
 				String productType = data[1];
 
+				// Inclusion Polymorphism, all services and tickets are of Product type
 				if (productType.equals("M")) {
 
-//					Parses the String to date time
+					// Parses the String to date time
 					DateTime movieDateTime = DateTime.parse(data[2], DateTimeFormat.forPattern("yyyy-MM-dd HH:mm"));
 
 					String movieName = data[3];
@@ -226,7 +241,7 @@ public class FlatFileReader {
 					String screenNumber = data[5];
 					double pricePerUnit = Double.parseDouble(data[6]);
 
-					MovieTicket movieTicket = new MovieTicket(productCode,productType, movieDateTime, movieName, address,
+					Product movieTicket = new MovieTicket(productCode, productType, movieDateTime, movieName, address,
 							screenNumber, pricePerUnit);
 
 					productList.add(movieTicket);
@@ -240,7 +255,7 @@ public class FlatFileReader {
 					DateTime endDate = DateTime.parse(data[4], DateTimeFormat.forPattern("yyyy-MM-dd"));
 					double cost = Double.parseDouble(data[5]);
 
-					SeasonPass seasonPass = new SeasonPass(productCode, productType, name, startDate, endDate, cost);
+					Product seasonPass = new SeasonPass(productCode, productType, name, startDate, endDate, cost);
 
 					productList.add(seasonPass);
 
@@ -250,7 +265,7 @@ public class FlatFileReader {
 
 					String name = data[2];
 					double cost = Double.parseDouble(data[3]);
-					Refreshment refreshment = new Refreshment(productCode,productType, name, cost);
+					Product refreshment = new Refreshment(productCode, productType, name, cost);
 					productList.add(refreshment);
 
 				}
@@ -258,7 +273,7 @@ public class FlatFileReader {
 				if (productType.equals("P")) {
 
 					double parkingFee = Double.parseDouble(data[2]);
-					ParkingPass parkingPass = new ParkingPass(productCode,productType, parkingFee);
+					Product parkingPass = new ParkingPass(productCode, productType, parkingFee);
 					productList.add(parkingPass);
 
 				}

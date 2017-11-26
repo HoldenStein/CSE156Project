@@ -11,25 +11,61 @@ public class MovieTicket extends Ticket {
 	private String screenNumber;
 	private double pricePerUnit;
 
-	
-	public MovieTicket(String productCode, String productType, DateTime movieDateTime, String movieName, Address address, String screenNumber,
-			double pricePerUnit ) {
-		super(productCode,productType);
-		
+	private double detailSubTotal;
+	private boolean hasDiscount;
+	private int itemCount;
+
+	public MovieTicket(String productCode, String productType, DateTime movieDateTime, String movieName,
+			Address address, String screenNumber, double pricePerUnit) {
+		super(productCode, productType);
+
 		this.movieDateTime = movieDateTime;
 		this.movieName = movieName;
 		this.address = address;
 		this.screenNumber = screenNumber;
 		this.pricePerUnit = pricePerUnit;
-		
+
 	}
 
+	// setters and getters
 
 	@Override
-	public String getProduct() {
-		return this.getProductType() + " - " + this.movieName + " - " + "@" + this.address.getFullAddress() + ", " + this.movieDateTime.toString("MMM dd, yyyy HH:mm");
+	public double getTotalCost() {
+
+		double totalCost = detailSubTotal + getProductTax();
+
+		return totalCost;
 	}
 
+	@Override
+	public double getProductTax() {
+		double tax = this.detailSubTotal * getTicketTax();
+		return tax;
+	}
+
+	public String getProductTypeName() {
+		return "MovieTicket";
+	}
+
+	public double getDiscount() {
+		return 0.07;
+	}
+
+	public void setDetailSubTotal(double detailSubTotal) {
+		this.detailSubTotal = detailSubTotal;
+	}
+
+	public double getDetailSubTotal() {
+		return this.detailSubTotal;
+	}
+
+	public void setHasDiscount(boolean hasDiscount) {
+		this.hasDiscount = hasDiscount;
+	}
+
+	public boolean getHasDiscounted() {
+		return this.hasDiscount;
+	}
 
 	public DateTime getMovieDateTime() {
 		return this.movieDateTime;
@@ -47,15 +83,16 @@ public class MovieTicket extends Ticket {
 		return this.screenNumber;
 	}
 
-	@Override
-	public double getCost() {
+	public double getPricePerUnit() {
 		return this.pricePerUnit;
 	}
 
-	@Override
-	public double getTax() {
-		return 0.06;
+	public int getItemCount() {
+		return this.itemCount;
 	}
 
+	public void setItemCount(int itemCount) {
+		this.itemCount = itemCount;
+	}
 
 }

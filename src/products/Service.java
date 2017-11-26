@@ -1,30 +1,37 @@
 package products;
 
-public abstract class Service implements Product{
+public abstract class Service implements Product {
 
 	private String productCode;
 	private String productType;
-	
-	public Service(String productCode,String productType) {
+
+	public Service(String productCode, String productType) {
 		this.productCode = productCode;
 		this.productType = productType;
 	}
 
+	public double getServiceTax() {
+		return 0.04;
+	}
+
+	@Override
 	public String getProductCode() {
-		return this.productCode;
+		return productCode;
 	}
 
+	@Override
 	public String getProductType() {
-		if(this.productType.equals("P")) {
-			return "ParkingPass";
-		} else if(this.productType.equals("R")) {
-			return "Refreshment";
-		}
-		return this.productType;
+		return productType;
 	}
 
-	public String getProduct() {
-		return "Service";
+	@Override
+	public double getProductTax() {
+		return 0;
+	}
+
+	@Override
+	public double getTotalCost() {
+		return 0;
 	}
 
 }

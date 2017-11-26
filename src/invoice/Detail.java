@@ -1,56 +1,211 @@
 package invoice;
 
 import customer.Customer;
+import dataContainer.Address;
 import dataContainer.Person;
+import products.MovieTicket;
+import products.ParkingPass;
 import products.Product;
+import products.Refreshment;
+import products.SeasonPass;
 
 import java.util.ArrayList;
 
+import org.joda.time.DateTime;
+
 public class Detail extends Invoice {
-    public Detail(String invoiceCode, String customerCode, String salespersonCode, String invoiceDate, ArrayList<Customer> customerList, ArrayList<Person> personList, ArrayList<Product> productList, ArrayList<String> productCodes) {
-        super(invoiceCode, customerCode, salespersonCode, invoiceDate, customerList, personList, productList, productCodes);
-    }
+	public Detail(String invoiceCode, String customerCode, String salespersonCode, DateTime invoiceDate,
+			ArrayList<Customer> customerList, ArrayList<Person> personList, ArrayList<Product> productList,
+			ArrayList<String> productPurchased) {
+		super(invoiceCode, customerCode, salespersonCode, invoiceDate, customerList, personList, productList,
+				productPurchased);
+	}
 
-    public Detail(ArrayList<Invoice> invoiceList) {
-        super(invoiceList);
-    }
+	public Detail(InvoiceList invoiceList) {
+		super(invoiceList);
+	}
 
+	public void getDetailReport() {
 
+		System.out.println();
+		System.out.println("Individual Invoice Detail Reports");
+		System.out.println("==================================================");
+		System.out.println();
 
+		for (Invoice i : this.getInvoiceList()) {
+			System.out.println();
+			System.out.println("Invoice: " + i.getInvoiceCode());
+			System.out.println("========================");
+			System.out.println("Salesperson: " + i.getSalesPersonName());
+			System.out.println("Customer Info: ");
+			System.out.println("  " + i.getCustomerName() + "(" + i.getCustomerCode() + ")");
+			System.out.println("  " + "[" + i.getCustomerTypeName() + "]");
+			System.out.println("  " + i.getCustomerFullName());
+			System.out.println("  " + i.getCustomerAddress());
+			System.out.println("-------------------------------------------");
+			System.out.printf("%-10s %-80s %-16s %-10s %s\n", "Code", "Item(s)", "SubTotal", "Tax", "Total");
 
+			for (String s : i.getproductPurchased()) {
 
-    public void getDetailReport() {
+				String data[] = s.trim().split(":");
 
-       for(Invoice i : this.getInvoiceList()) {
+				for (Product p : i.invoiceProductInfo()) {
 
-           System.out.println();
-           System.out.println("Individual Invoice Detail Reports");
-               System.out.println("=====================================");
-               System.out.println("Invoice: " + i.getInvoiceCode());
-               System.out.println("=====================================");
-               System.out.println("Salesperson: " + i.getSalesPersonName());
-               System.out.println("Customer Info: ");
-               System.out.println(i.getCustomerName() + "(" + i.getCustomerCode() + ")");
-               System.out.println(i.getCustomerFullName());
-               System.out.println(i.getCustomerType());
-               System.out.println(i.getCustomerAddress());
-               System.out.println("---------------------------------------");
-               System.out.println("Code - Item(s) - SubTotal - Tax - Total");
+					if (data[0].equals(p.getProductCode())) {
 
-                for(String s : i.getProductInfo()) {
-                    System.out.println(s);
-                }
+						if (p.getProductType().equals("M")) {
 
-                System.out.println("=====================================");
-                System.out.println("SUB-TOTAL: " + i.getDetailSubTotal());
+							MovieTicket movieTicket = (MovieTicket) p;
 
+							Address address = movieTicket.getAddress();
+							DateTime date = movieTicket.getMovieDateTime();
 
+							if (movieTicket.getHasDiscounted() == true) {
 
+								String itemsString = movieTicket.getProductTypeName() + " " + "'"
+										+ movieTicket.getMovieName() + " @ " + address.getStreet();
 
+								System.out.printf("%-11s%-79s%s%8.2f%5s%8.2f%5s%8.2f", movieTicket.getProductCode(),
+										itemsString, "$", movieTicket.getDetailSubTotal(), "$",
+										movieTicket.getProductTax(), "$", movieTicket.getTotalCost());
 
+								System.out.printf("%n %13s %s,%s %s:%02d (%s unit(s) @ $%.2f/unit - Tue/Thu 7%% off)%n",
+										date.monthOfYear().getAsShortText(), date.getDayOfMonth(), date.getYear(),
+										date.getHourOfDay(), date.getMinuteOfHour(), movieTicket.getItemCount(),
+										movieTicket.getPricePerUnit());
 
-       }
+							} else if (movieTicket.getHasDiscounted() == false) {
 
-    }
+								String itemsString = movieTicket.getProductTypeName() + " " + "'"
+										+ movieTicket.getMovieName() + " @ " + address.getStreet();
+
+								System.out.printf("%-11s%-79s%s%8.2f%5s%8.2f%5s%8.2f", movieTicket.getProductCode(),
+										itemsString, "$", movieTicket.getDetailSubTotal(), "$",
+										movieTicket.getProductTax(), "$", movieTicket.getTotalCost());
+
+								System.out.printf("%n %13s %s,%s %s:%02d (%s unit(s) @ $%.2f/unit)%n",
+										date.monthOfYear().getAsShortText(), date.getDayOfMonth(), date.getYear(),
+										date.getHourOfDay(), date.getMinuteOfHour(), movieTicket.getItemCount(),
+										movieTicket.getPricePerUnit());
+
+							}
+
+						}
+						if (p.getProductType().equals("P")) {
+
+							ParkingPass parkingPass = (ParkingPass) p;
+
+							if (parkingPass.getHasTicket()) {
+
+								String itemString = String.format("%s %s (%s unit(s) @ $%.2f with %s free)",
+										parkingPass.getProductTypeName(), parkingPass.getTicketCode(),
+										parkingPass.getItemCount(), parkingPass.getParkingFee(),
+										parkingPass.getNumOfFreeParking());
+
+								System.out.printf("%-11s%-79s%s%8.2f%5s%8.2f%5s%8.2f%n", parkingPass.getProductCode(),
+										itemString, "$", parkingPass.getDetailSubTotal(), "$",
+										parkingPass.getProductTax(), "$", parkingPass.getTotalCost());
+
+							} else {
+
+								String itemString = String.format("%s (%s unit(s) @ $%.2f)",
+										parkingPass.getProductTypeName(), parkingPass.getItemCount(),
+										parkingPass.getParkingFee());
+
+								System.out.printf("%-11s%-79s%s%8.2f%5s%8.2f%5s%8.2f%n", parkingPass.getProductCode(),
+										itemString, "$", parkingPass.getDetailSubTotal(), "$",
+										parkingPass.getProductTax(), "$", parkingPass.getTotalCost());
+
+							}
+						}
+						if (p.getProductType().equals("S")) {
+
+							SeasonPass seasonPass = (SeasonPass) p;
+
+							String itemString = seasonPass.getProductTypeName() + " - " + seasonPass.getName();
+
+							if (seasonPass.hasProtrated()) {
+
+								System.out.printf("%-11s%-79s%s%8.2f%5s%8.2f%5s%8.2f%n", seasonPass.getProductCode(),
+										itemString, "$", seasonPass.getDetailSubTotal(), "$",
+										seasonPass.getProductTax(), "$", seasonPass.getTotalCost());
+
+								System.out.printf("%-11s(%s unit(s) @ $%.2f/unit prorated %s/%s days + $8 fee/unit) %n",
+										" ", seasonPass.getItemCount(), seasonPass.getCost(),
+										seasonPass.getDaysRemaining(), seasonPass.getTotalSeasonDays());
+							} else {
+
+								System.out.printf("%-11s%-79s%s%8.2f%5s%8.2f%5s%8.2f%n", seasonPass.getProductCode(),
+										itemString, "$", seasonPass.getDetailSubTotal(), "$",
+										seasonPass.getProductTax(), "$", seasonPass.getTotalCost());
+
+								System.out.printf("%-11s(%s unit(s) @ $%.2f/unit + $8 fee/unit) %n", " ",
+										seasonPass.getItemCount(), seasonPass.getCost());
+
+							}
+
+						}
+						if (p.getProductType().equals("R")) {
+
+							Refreshment refreshment = (Refreshment) p;
+
+							if (refreshment.isHasDiscount()) {
+
+								String itemString = String.format("%s (%s unit(s) @ $%.2f/unit with 5%% off)",
+										refreshment.getName(), refreshment.getItemCount(), refreshment.getCost());
+
+								System.out.printf("%-11s%-79s%s%8.2f%5s%8.2f%5s%8.2f%n", refreshment.getProductCode(),
+										itemString, "$", refreshment.getDetailSubTotal(), "$",
+										refreshment.getProductTax(), "$", refreshment.getTotalCost());
+
+							} else {
+
+								String itemString = String.format("%s (%s unit(s) @ $%.2f/unit)", refreshment.getName(),
+										refreshment.getItemCount(), refreshment.getCost());
+
+								System.out.printf("%-11s%-79s%s%8.2f%5s%8.2f%5s%8.2f%n", refreshment.getProductCode(),
+										itemString, "$", refreshment.getDetailSubTotal(), "$",
+										refreshment.getProductTax(), "$", refreshment.getTotalCost());
+							}
+						}
+
+					}
+
+					// products
+				}
+
+			}
+			System.out.printf("%n%126s%n", "====================================");
+			System.out.printf("%-10s%81s%8.2f%5s%8.2f%5s%8.2f", "SUB-TOTALS", "$", i.getTotalDetailCost(), "$",
+					i.getTotalTaxAmount(), "$", i.getTotalSubTotal());
+
+			if (i.getCustomerTypeName() == "General") {
+
+				System.out.printf("%n%-10s%107s%8.2f", "TOTAL", "$", i.getFinalTotal());
+
+			} else if (i.getCustomerTypeName() == "Student") {
+				System.out.printf("%n%-30s%87s%8.2f", "DISCOUNT (8% STUDENT & NO TAX)", "$",
+						i.getTotalDiscountAmount());
+				System.out.printf("%n%-25s%92s%8.2f", "ADDITIONAL FEE (STUDENT)", "$", i.getStudentFee());
+				System.out.printf("%n%-10s%107s%8.2f", "TOTAL", "$", i.getFinalTotal());
+
+			} else {
+				System.out.println("Invalid Customer");
+			}
+
+			System.out.println();
+			System.out.println();
+			System.out.println("\t\t" + "Thank you for your purchase!");
+			System.out.println();
+			System.out.println();
+			System.out.println();
+			System.out.println();
+
+		}
+
+		System.out.printf(
+				"=============================================================================================================================");
+
+	}
 
 }

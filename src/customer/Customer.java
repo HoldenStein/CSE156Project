@@ -3,20 +3,42 @@ package customer;
 import dataContainer.Address;
 import dataContainer.Person;
 
-public class Customer{
+public class Customer {
 
 	private String customerCode;
-	private String type;
-	private Person Contact;
+	private String customerType;
+	private Person primaryContact;
 	private String customerName;
 	private Address address;
 
-	public Customer(String customerCode,String type, Person contact, String name, Address address) {
+	public Customer(String customerCode, String customerType, Person primaryContact, String name, Address address) {
 		this.customerCode = customerCode;
-		this.Contact = contact;
+		this.primaryContact = primaryContact;
 		this.customerName = name;
 		this.address = address;
-		this.type = type;
+		this.customerType = customerType;
+	}
+
+	public boolean isStudent() {
+		if (getCustomerType() == "S") {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean isGeneral() {
+		if (getCustomerType() == "G") {
+			return true;
+		}
+		return false;
+	}
+
+	public double getStudentDiscount() {
+		return 0.08;
+	}
+
+	public double getStudentFee() {
+		return 6.75;
 	}
 
 	// setters and getter
@@ -24,37 +46,20 @@ public class Customer{
 		return customerCode;
 	}
 
-	public String getType() {
-		return type;
+	public String getCustomerType() {
+		return customerType;
 	}
 
-	public Person getContact() {
-		return Contact;
-	}
-	public void setCustomerCode(String customerCode) {
-		this.customerCode = customerCode;
-	}
-
-	public void setContact(Person contact) {
-		this.Contact = contact;
+	public Person getPrimaryContact() {
+		return primaryContact;
 	}
 
 	public String getName() {
 		return customerName;
 	}
 
-	public void setName(String customerName) {
-		this.customerName = customerName;
-	}
-
 	public Address getAddress() {
 		return address;
 	}
-
-	public void setAddress(Address address) {
-		this.address = address;
-	}
-
-
 
 }

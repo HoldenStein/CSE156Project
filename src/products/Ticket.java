@@ -10,21 +10,30 @@ public abstract class Ticket implements Product {
 		this.productType = productType;
 	}
 
+	public double getTicketTax() {
+		return 0.06;
+	}
+
+	@Override
 	public String getProductCode() {
 		return productCode;
 	}
 
+	@Override
 	public String getProductType() {
-		if(this.productType.equals("M")) {
-			return "MovieTicket";
-		} else if(this.productType.equals("S")) {
-			return "SeasonPass";
-		}
 		return productType;
 	}
 
-	public String getProduct() {
-		return "Ticket";
+	@Override
+	public double getProductTax() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double getTotalCost() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }
