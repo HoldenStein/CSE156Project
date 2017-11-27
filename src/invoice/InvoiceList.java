@@ -112,8 +112,6 @@ public class InvoiceList implements Iterable<Invoice> {
 			if (getComp().compare(invoice, start.getInvoice()) > 0) {
 
 				newInvoiceNode.setNext(start);
-				start.setNext(null);
-
 				start = newInvoiceNode;
 
 				size++;
@@ -125,7 +123,6 @@ public class InvoiceList implements Iterable<Invoice> {
 
 				start.setNext(newInvoiceNode);
 				newInvoiceNode.setNext(startNeighbor);
-				startNeighbor.setNext(null);
 
 				size++;
 
